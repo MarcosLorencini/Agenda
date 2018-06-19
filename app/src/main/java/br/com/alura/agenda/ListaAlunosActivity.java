@@ -28,9 +28,38 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
 
         listaAlunos = (ListView) findViewById(R.id.lista_alunos);
+
+        //capturar o click na lista
+        //lista é a lista que foi clicada
+        //item que foi clicado
+        //posicaoItem posicao do item clicado
+        //idItem id do item clicado
+        listaAlunos.setOnItemClickListener(new AdapterView.OnItemClickListener() {//  trata o click no item
+            @Override
+            public void onItemClick(AdapterView<?> lista, View item, int posicaoItem, long idItem) {
+                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(posicaoItem);
+                //Toast.makeText(ListaAlunosActivity.this, "Aluno "+aluno.getNome()+" clicado", Toast.LENGTH_SHORT).show();
+                Intent intetVaiProFormulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);//vai para o fom de cadastro
+                //transf o aluno de uma activity para outra
+                intetVaiProFormulario.putExtra("aluno", aluno); //pendura o aluno para ser mostrado no formulario pela etiqueta "aluno"
+                 startActivity(intetVaiProFormulario);
+            }
+        });
+        /*
+        // OU PODE USAR UM CLICK LONGO
+        listaAlunos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Toast.makeText(ListaAlunosActivity.this, "Clique longo", Toast.LENGTH_SHORT).show();
+                //se devolve um true, ninguem mais vai poder tratar este clique. só vai mostrar o Toast
+                //se devolver um false passa para frente para se alguém estiver interessado. Vai mostrar o Toast e o Menu de contexto
+                return true;
+            }
+        });
+        */
         
         Button novoAluno = findViewById(R.id.novo_aluno);
-        novoAluno.setOnClickListener(new View.OnClickListener() {
+        novoAluno.setOnClickListener(new View.OnClickListener() {// trata o click em qualquer lugar da lista
             @Override
             public void onClick(View view) {
                 Intent intentVaiProFormulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);

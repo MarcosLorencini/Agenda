@@ -1,6 +1,9 @@
 package br.com.alura.agenda.modelo;
 
-public class Aluno {
+import java.io.Serializable;
+
+//serializa para passar o aluno da activity listaAluno para activity Formulario
+public class Aluno implements Serializable{
     private Long id;
     private String nome;
     private String endereco;
