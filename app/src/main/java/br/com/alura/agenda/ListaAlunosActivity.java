@@ -1,9 +1,13 @@
 package br.com.alura.agenda;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.Browser;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -99,6 +103,32 @@ public class ListaAlunosActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;// estamos usando AdapterView(listaAlunos)
         final Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);//devolve o aluno que esta na posicao que o menuInfo informou
 
+        MenuItem itemLigar = menu.add("Ligar");
+
+        itemLigar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                //verifica se possui a permissão de ligar
+                if(ActivityCompat.checkSelfPermission(ListaAlunosActivity.this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED){//permissao dada para o usuario
+                    //pedir para o usuario permitir a ligacao
+                    //requestPermissions mostra a popup da permissão
+                    //123 serve para diferencia qual é a permissão.
+                    ActivityCompat.requestPermissions(ListaAlunosActivity.this,
+                            new String[]{Manifest.permission.CALL_PHONE},123 );
+                }else{
+                    //o cliente já possui permissão
+                    Intent intentLigar = new Intent(Intent.ACTION_CALL);
+                    intentLigar.setData(Uri.parse("tel:"  + aluno.getTelefone()));
+                    startActivity(intentLigar);
+
+                }
+                return false;
+            }
+        });
+
+
+
         MenuItem itemSMS = menu.add("Enviar SMS");
         Intent intentSMS = new Intent(Intent.ACTION_VIEW);
         intentSMS.setData(Uri.parse("sms:" + aluno.getTelefone()));//protocolo sms
@@ -141,5 +171,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     }
 
-
+    //O cliente deu a permissão ou não da ligação ele vai chamar este método
+   // @Override
+   // public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+     //   super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+  //
+  //  }
 }
