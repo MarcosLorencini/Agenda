@@ -15,15 +15,17 @@ public class FormularioHelper {
 
     private Aluno aluno;
 
+    //inserindo um novo aluno
+    //mapeia os id´s dos campos da tela para uma variavel
     public FormularioHelper(FormularioActivity activity){
          campoNome = activity.findViewById(R.id.formulario_nome);
          campoEndereco = activity.findViewById(R.id.formulario_endereco);
          campoTelefone = activity.findViewById(R.id.formulario_telefone);
          campoSite = activity.findViewById(R.id.formulario_site);
          campoNota = activity.findViewById(R.id.formulario_nota);
-         aluno = new Aluno();//aluno novo nova instancia
+         aluno = new Aluno();//aluno novo nova instancia ainda não tem Id
     }
-
+    //pega o aluno da tela
     public Aluno pegarAluno() {
         aluno.setNome(campoNome.getText().toString());
         aluno.setEndereco(campoEndereco.getText().toString());
@@ -32,14 +34,14 @@ public class FormularioHelper {
         aluno.setNota(Double.valueOf(campoNota.getProgress()));
         return aluno;
     }
-
+    //pega o aluno e joga na tela
     public void preecheFormulario(Aluno aluno) {
         campoNome.setText(aluno.getNome());
         campoEndereco.setText(aluno.getEndereco());
         campoTelefone.setText(aluno.getTelefone());
         campoSite.setText(aluno.getSite());
-        campoNota.setProgress(aluno.getNota().intValue());
-        this.aluno = aluno;//o id já está aqui
+        campoNota.setProgress(aluno.getNota().intValue());//double converte para int
+        this.aluno = aluno;//atualiza o aluno, o id está aqui, para depois conseguir pegar o aluno pelo metodos pegarAluno()
 
 
     }

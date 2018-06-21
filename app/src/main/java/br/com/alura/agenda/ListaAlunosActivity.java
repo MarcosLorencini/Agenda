@@ -2,6 +2,8 @@ package br.com.alura.agenda;
 
 import android.content.Intent;
 import android.content.pm.LabeledIntent;
+import android.net.Uri;
+import android.provider.Browser;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -41,7 +43,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
                 //Toast.makeText(ListaAlunosActivity.this, "Aluno "+aluno.getNome()+" clicado", Toast.LENGTH_SHORT).show();
                 Intent intetVaiProFormulario = new Intent(ListaAlunosActivity.this, FormularioActivity.class);//vai para o fom de cadastro
                 //transf o aluno de uma activity para outra
-                intetVaiProFormulario.putExtra("aluno", aluno); //pendura o aluno para ser mostrado no formulario pela etiqueta "aluno"
+                intetVaiProFormulario.putExtra("aluno", aluno); //pendura o aluno para ser mostrado no formulario pela etiqueta "aluno" o model aluno dever ser serializado
                  startActivity(intetVaiProFormulario);
             }
         });
@@ -57,7 +59,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
             }
         });
         */
-        
+
         Button novoAluno = findViewById(R.id.novo_aluno);
         novoAluno.setOnClickListener(new View.OnClickListener() {// trata o click em qualquer lugar da lista
             @Override
@@ -94,12 +96,39 @@ public class ListaAlunosActivity extends AppCompatActivity {
     //menuInfo diz qual item da lista que foi clicado para gerar o menu de contexto
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, final ContextMenu.ContextMenuInfo menuInfo) {
-        MenuItem deletar = menu.add("Deletar");//colocar deletar no menu de contexto lista e cria uma referencia para ele
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;// estamos usando AdapterView(listaAlunos)
+        final Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);//devolve o aluno que esta na posicao que o menuInfo informou
+
+        MenuItem itemSMS = menu.add("Enviar SMS");
+        Intent intentSMS = new Intent(Intent.ACTION_VIEW);
+        intentSMS.setData(Uri.parse("sms:" + aluno.getTelefone()));//protocolo sms
+        itemSMS.setIntent(intentSMS);
+
+        MenuItem itemMapa = menu.add("Vizualizar no mapa");
+        Intent intentMapa = new Intent(Intent.ACTION_VIEW);
+        intentMapa.setData(Uri.parse("geo:0,0?q=" + aluno.getEndereco()));//protocolo geo
+        itemMapa.setIntent(intentMapa);
+
+
+
+        //mesmo efeito que o clique do "Deletar"
+        MenuItem itemSite = menu.add("Visita site");//add no menu contexto
+        Intent intentSite = new Intent(Intent.ACTION_VIEW);//Intent.ACTION_VIEW =  visualizar algo
+
+        String site = aluno.getSite();
+        if(!site.startsWith("http://")){
+            site = "http://"+site;
+        }
+        intentSite.setData(Uri.parse(site));//parse de string para URI
+        itemSite.setIntent(intentSite);
+
+
+
+        MenuItem deletar = menu.add("Deletar");//add deletar no menu de contexto lista e cria uma referencia para ele
         deletar.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() { //ouve o clique do deletar
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {//MenuItem menuItem é o item do menu de contexto no caso Deletar
-                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;// estamos usando AdapterView(listaAlunos)
-                Aluno aluno = (Aluno) listaAlunos.getItemAtPosition(info.position);//devolve o aluno que esta na posicao que o menuInfo informou
+
                 AlunoDAO dao = new AlunoDAO(ListaAlunosActivity.this);
                 dao.deleta(aluno);
                 dao.close();

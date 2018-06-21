@@ -27,6 +27,7 @@ public class FormularioActivity extends AppCompatActivity {
         //recuperar os dados que vieram da listaAlunosActivity
         Intent intent = getIntent();
         Aluno aluno = (Aluno) intent.getSerializableExtra("aluno");//etiqueta "aluno" da listaAluno
+        //verifica se existe o aluno para ser preenchido no form
         if(aluno != null){
             helper.preecheFormulario(aluno);
         }
@@ -41,6 +42,9 @@ public class FormularioActivity extends AppCompatActivity {
         inflater.inflate(R.menu.menu_formulario, menu);//transforma o xml em um menu
         return super.onCreateOptionsMenu(menu);
     }
+
+    //metodo chamado sempre que clica em algum item do menu
+    //botao cheque no campo sup direito
     //passa o item que foi clicado
     //usado quando usa o xml
     @Override
@@ -48,12 +52,18 @@ public class FormularioActivity extends AppCompatActivity {
         //faz o switch para ver o que for clicado pelo id
         switch (item.getItemId()){
             case R.id.menu_formulario_ok:
-                Aluno aluno = helper.pegarAluno();
+                Aluno aluno = helper.pegarAluno();//aluno novo o id estará vazio
                 AlunoDAO dao = new AlunoDAO(this); //contexto da nossa activit
-                dao.insere(aluno);
-                dao.close();// ganhamos do SQLiteHelper
-                Toast.makeText(FormularioActivity.this,"Aluno "+aluno.getNome() + "Salvo!", Toast.LENGTH_SHORT).show();
 
+                if(aluno.getId() != null){
+                    dao.altera(aluno);
+                }else{
+                    dao.insere(aluno);
+                }
+
+                dao.close();// ganhamos do SQLiteHelper
+
+                Toast.makeText(FormularioActivity.this,"Aluno "+aluno.getNome()+" salvo com sucesso!", Toast.LENGTH_SHORT).show();
 
                 finish();
             break;
