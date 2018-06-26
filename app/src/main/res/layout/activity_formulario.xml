@@ -4,10 +4,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!--- match_parent: toma a tela inteira -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"> <!--- um elemento abaixo do outro -->
+
+
+        <!--- colocar o botao por cima da foto(imagem) -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="225dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/person"
+                android:background="00ABEC"/> <!--- cor fundo da imagem -->
+
+            <!--- android:background="@drawable/fundo" usando um arquivo já criado de botao
+                android:layout_alignParentBottom="true" move o botao para o fim da imagem
+                android:layout_alignParentRight="true" move o botão para o lado direito da imagem
+                android:layout_marginRight="16dp" espaco a direita o botao
+            -->
+            <Button
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:background="@drawable/fundo"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="16dp"/>
+
+        </RelativeLayout>
+        
+
+
 
         <EditText android:hint="Nome"
             android:layout_width="match_parent"
