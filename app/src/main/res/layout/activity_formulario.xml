@@ -13,15 +13,17 @@
 
 
         <!--- colocar o botao por cima da foto(imagem) -->
+        <!--- android:layout_height="225dp" botao descer -->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="225dp">
 
             <ImageView
+                android:id="@+id/formulario_foto"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:src="@drawable/person"
-                android:background="00ABEC"/> <!--- cor fundo da imagem -->
+                android:background="#00ABEC"/> <!--- cor fundo da imagem -->
 
             <!--- android:background="@drawable/fundo" usando um arquivo já criado de botao
                 android:layout_alignParentBottom="true" move o botao para o fim da imagem
@@ -29,9 +31,10 @@
                 android:layout_marginRight="16dp" espaco a direita o botao
             -->
             <Button
+                android:id="@+id/formulario_botao_foto"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:background="@drawable/fundo"
+                android:background="@drawable/fundo_camera"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="16dp"/>

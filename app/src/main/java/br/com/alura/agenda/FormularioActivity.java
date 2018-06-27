@@ -1,6 +1,13 @@
 package br.com.alura.agenda;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,14 +15,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.File;
 
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
 
 public class FormularioActivity extends AppCompatActivity {
 
+    public static final int CODIGO_CAMERA = 567;
     private FormularioHelper helper;
+    private String caminhoFoto;
 
     @Override//cria o formulario
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +44,52 @@ public class FormularioActivity extends AppCompatActivity {
             helper.preecheFormulario(aluno);
         }
 
+       //refer para o botao da foto da tela
+        Button botaoFoto = (Button) findViewById(R.id.formulario_botao_foto);
+        botaoFoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //intent implicita para tirar a foto
+                Intent intentCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                //define onde quer salvar a foto
+                //getExternalFilesDir() pasta onde esta localizada a nossa app
+                //System.currentTimeMillis() data e hora para diferenciar uma foto da outra
+                caminhoFoto = getExternalFilesDir(null) + "/" +System.currentTimeMillis() + ".jpg";
+                //cria o obj do tipo arquivo
+                File arquivoFoto = new File(caminhoFoto);
+                //MediaStore.EXTRA_OUTPUT constante que especifica o caminho da foto, pois toda a aplicacao de camera vai conseguir entender
+                // Uri.fromFile(arquivoFoto) cria o caminho fisico para salvar a foto
+                intentCamera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(arquivoFoto));
+                //o S.O. avisa para nos que a foto foi tirada e podemos utilizá-la para mostrar na tela apos ter tirado
+                startActivityForResult(intentCamera, CODIGO_CAMERA);
 
+            }
+        });
     }
+
+
+    //vai chamar quando o método startActivityForResult(intentCamera, CODIGO_CAMERA); retornar o seu resultado, terminar a sua acão
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+         //verifica se foi completada a ação de tirar a foto, não saiu no momento de tirar a foto
+        if(requestCode == Activity.RESULT_OK){
+            //verifica se foi a ação da camera
+            if(requestCode == CODIGO_CAMERA){
+                //abrir a foto que foi tirada
+                //pegou a ref. do ImageView
+                ImageView foto = (ImageView) findViewById(R.id.formulario_foto);
+                //transf. o arquivo em bitmap a partir do caminho da foto
+                Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
+                //alterar o tamanho da foto
+                // 300 é o tamanho, true é o filtro para melhorar a imagem
+                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+                foto.setImageBitmap(bitmapReduzido);
+                //faz com que a imagem se encaixe no ImageView
+                foto.setScaleType(ImageView.ScaleType.FIT_XY);
+            }
+         }
+    }
+
     //criação do menu
     //passa um Menu vazio para ser criado
     @Override
