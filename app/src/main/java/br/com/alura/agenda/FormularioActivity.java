@@ -72,20 +72,10 @@ public class FormularioActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
          //verifica se foi completada a ação de tirar a foto, não saiu no momento de tirar a foto
-        if(requestCode == Activity.RESULT_OK){
+        if(resultCode == Activity.RESULT_OK){
             //verifica se foi a ação da camera
             if(requestCode == CODIGO_CAMERA){
-                //abrir a foto que foi tirada
-                //pegou a ref. do ImageView
-                ImageView foto = (ImageView) findViewById(R.id.formulario_foto);
-                //transf. o arquivo em bitmap a partir do caminho da foto
-                Bitmap bitmap = BitmapFactory.decodeFile(caminhoFoto);
-                //alterar o tamanho da foto
-                // 300 é o tamanho, true é o filtro para melhorar a imagem
-                Bitmap bitmapReduzido = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
-                foto.setImageBitmap(bitmapReduzido);
-                //faz com que a imagem se encaixe no ImageView
-                foto.setScaleType(ImageView.ScaleType.FIT_XY);
+               helper.carregaImagem(caminhoFoto);
             }
          }
     }

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import br.com.alura.agenda.adapter.AlunosAdapter;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
 
@@ -83,10 +84,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
         AlunoDAO dao = new AlunoDAO(this);//contexto activite
         List<Aluno> alunos = dao.buscaAlunos();
         dao.close();// ganhamos do SQLiteHelper
-
-
-        ArrayAdapter<Aluno> adapter = new ArrayAdapter<Aluno>(this,android.R.layout.simple_list_item_1,alunos );
-        listaAlunos.setAdapter(adapter);
+            //passsa o contexto
+            //passa a lista de alunos para o adapter
+            AlunosAdapter adapter = new AlunosAdapter(this, alunos);
+            listaAlunos.setAdapter(adapter);
     }
 
     //quando pausar a activity ListaAlunos para adicionar mais um aluno volta para este método com o aluno gravado por ultimo.
