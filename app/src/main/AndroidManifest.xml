@@ -23,7 +23,14 @@
         </activity>
         <activity
             android:name=".FormularioActivity"
-            android:label="Formulario"></activity>
+            android:label="Formulario">
+        </activity>
+        <!---android.provider.Telephony.SMS_RECEIVED o envento que vai disparar nosso receiver -->
+        <receiver android:name=".receiver.SMSReceiver">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
