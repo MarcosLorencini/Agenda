@@ -6,6 +6,9 @@
     <!---Permissão para fazer chamadas telefonicas -->
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
+    <!---Permissão para o adroid trabalhar com SMS -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
     <application
         android:allowBackup="true"
         android:debuggable="true"
@@ -26,6 +29,7 @@
             android:label="Formulario">
         </activity>
         <!---android.provider.Telephony.SMS_RECEIVED o envento que vai disparar nosso receiver -->
+        <!---android.provider.Telephony.SMS_RECEIVED nosso evento -->
         <receiver android:name=".receiver.SMSReceiver">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
