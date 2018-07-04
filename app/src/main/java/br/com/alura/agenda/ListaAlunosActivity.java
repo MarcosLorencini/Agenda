@@ -11,6 +11,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import br.com.alura.agenda.adapter.AlunosAdapter;
+import br.com.alura.agenda.converter.AlunoConverter;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
 
@@ -95,6 +97,26 @@ public class ListaAlunosActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         carregaLista();
+    }
+
+    //criar o botao para enviar os dados do aluno para nuvem
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //inflar o menu acima da lista alunos
+        getMenuInflater().inflate(R.menu.menu_lista_alunos, menu);
+        return true;
+    }
+
+    //comportamento do click para enviar as notas
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //descobrir qual item foi clicado
+        switch (item.getItemId()){
+            case R.id.menu_enviar_notas:
+                new EnviaAlunosTask(this).execute();//pode passar parametros para o doInBackground
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //recebe um ContextMenu vazio e popula ele
