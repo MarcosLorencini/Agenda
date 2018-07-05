@@ -107,13 +107,17 @@ public class ListaAlunosActivity extends AppCompatActivity {
         return true;
     }
 
-    //comportamento do click para enviar as notas
+    //comportamento do click para enviar as notas(desenho da nuvem)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //descobrir qual item foi clicado
         switch (item.getItemId()){
             case R.id.menu_enviar_notas:
                 new EnviaAlunosTask(this).execute();//pode passar parametros para o doInBackground
+                break;
+            case R.id.menu_baixar_provas:
+                Intent vaiParaProvas = new Intent(this, ProvasActivity.class);//vai do contexto atual para o contexto ProvasActivity
+                startActivity(vaiParaProvas);
                 break;
         }
         return super.onOptionsItemSelected(item);

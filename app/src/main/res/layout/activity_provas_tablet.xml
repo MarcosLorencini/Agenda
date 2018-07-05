@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--- android:layout_weight="1" = trabalha com proporçoes na tela. 1 os dois recebe o mesmo espaço para apresentar na tela -->
+
+    <!--- inclue a tela(view de provas) -->
+    <include layout="@layout/activity_provas"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+    <!--- inclue a tela(view detalheres da prova) -->
+    <include layout="@layout/activity_detalheres_prova"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+
+</LinearLayout>

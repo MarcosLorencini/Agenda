@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.alura.agenda">
 
-    <!---Permissão para fazer chamadas telefonicas -->
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <!-- -Permissão para fazer chamadas telefonicas -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
-    <!---Permissão para o adroid trabalhar com SMS -->
-    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <!-- -Permissão para o adroid trabalhar com SMS -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
-    <!---Permissão para usar a internet -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- -Permissão para usar a internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -29,15 +28,18 @@
         </activity>
         <activity
             android:name=".FormularioActivity"
-            android:label="Formulario">
-        </activity>
-        <!---android.provider.Telephony.SMS_RECEIVED o envento que vai disparar nosso receiver -->
-        <!---android.provider.Telephony.SMS_RECEIVED nosso evento -->
+            android:label="Formulario" />
+        <!-- -android.provider.Telephony.SMS_RECEIVED o envento que vai disparar nosso receiver -->
+        <!-- -android.provider.Telephony.SMS_RECEIVED nosso evento -->
         <receiver android:name=".receiver.SMSReceiver">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".ProvasActivity" />
+        <activity android:name=".DetalheresProvaActivity" />
+        <activity android:name=".ProvasTabletActivity"></activity>
     </application>
 
 </manifest>

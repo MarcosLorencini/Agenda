@@ -72,6 +72,7 @@ public class AlunosAdapter extends BaseAdapter {
             //parent = quando inflar passa um pai como referencia para o tamanho
             //false = se informar o pai "parent" o inflate já vai pegar o item e coloar na lista do parent informado e em seguida quando devolver a view "return view" vai colocar novamente na lista. Gera uma exception
             //ou seja se informa o pai vai colacar dentro da lista depois vai tentar coloar novamente, por isso deve-se coloar o parametro "false", não coloca o item ainda na lista, somente no final "return view"
+            //o android que escolhe qual tipo de tela ele vai abrir se é normal ou landscape, pois existem dois arquivo com o mesmo nome
             view = inflater.inflate(R.layout.list_item, parent, false);
         }
 
@@ -82,8 +83,21 @@ public class AlunosAdapter extends BaseAdapter {
         TextView campoTelefone = (TextView) view.findViewById(R.id.item_telefone);
         campoTelefone.setText(aluno.getTelefone());
 
+        TextView campoEndereco = (TextView) view.findViewById(R.id.item_endereco);
+        //campoEndereco está somente no modo retrato
+        if(campoEndereco != null){
+            campoEndereco.setText(aluno.getEndereco());
+        }
+
+        TextView campoSite = (TextView) view.findViewById(R.id.item_site);
+        //campoSite está somente no modo retrato
+        if(campoSite != null){
+            campoSite.setText(aluno.getSite());
+        }
+
         ImageView campoFoto = (ImageView) view.findViewById(R.id.item_foto);
         String caminhoFoto = aluno.getCaminhoFoto();
+
         if(caminhoFoto != null){
             //abrir a foto que foi tirada
             //pegou a ref. do ImageView
