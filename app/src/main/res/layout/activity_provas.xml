@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!--- CardView é um bliblioteca que deve ser baixada = File>Project Structure>Dependencie>+>Library Dependency>digitar o nome>seleciona>ok  -->
-<!--- app:cardElevation="5dp" = elevado(sombra) 5dp da tela  -->
-<!--- app:cardUseCompatPadding="true" = sombra é compatível com qualquer versao do android, manter o layout igual para todos  -->
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<!--- para usar frag na tela, ele guarda um lugar onde vai entrar o nosso frag, moldura vazia   -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_principal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true">
+    android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/provas_lista"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
-</android.support.v7.widget.CardView>
+</FrameLayout>
