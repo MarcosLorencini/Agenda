@@ -65,6 +65,10 @@ public class ProvasActivity extends AppCompatActivity {
             detalheFragment.setArguments(parametros);
             //vai do link da materia para a tela de detalhe(substitui o frag por outro)
             tx.replace(R.id.frame_principal, detalheFragment);
+            //quando clica do botao de back do celular ele volta para o Frag anterior que a lista de materia e não mata a activity
+            //null ser para marcar a transacao e poder procurar a transacao e voltar para um ponto especifico
+            tx.addToBackStack(null);
+
             tx.commit();
         }else{
            //pega o fragment detalhes e populado(vai ficar dois frag na tela das materias e os detalhes)
