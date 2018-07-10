@@ -64,6 +64,7 @@ public class Localizador implements GoogleApiClient.ConnectionCallbacks, Locatio
         //client pede o Google API cliente que se conectou com o servico LocationServices.API
         //request inf para o LocationServices.API
         //this responsavel por tratar os dados quando estiverem pronto, nossa classe, porém tem que implementar LocationListener
+        //faz a conexao com o GPS
         LocationServices.FusedLocationApi.requestLocationUpdates(client, request, this);
 
     }

@@ -64,8 +64,8 @@ public class MapaFragment extends SupportMapFragment implements OnMapReadyCallba
             }
         }
         alunoDAO.close();
-
-        new Localizador(getContext(), googleMap);
+        //getContext() está dentro de um fragment
+       new Localizador(getContext(), googleMap);
 
     }
 
