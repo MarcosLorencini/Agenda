@@ -15,7 +15,7 @@ import br.com.alura.agenda.modelo.Prova;
 import static br.com.alura.agenda.R.id.detalhes_prova_materia;
 
 
-public class DetalhesProvaFragment extends Fragment {
+public class        DetalhesProvaFragment extends Fragment {
 
 
     private TextView campoMateria;
