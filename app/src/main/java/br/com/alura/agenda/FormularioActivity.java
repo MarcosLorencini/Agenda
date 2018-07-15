@@ -22,6 +22,7 @@ import java.io.File;
 
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
+import br.com.alura.agenda.tasks.InsereAlunoTask;
 
 public class FormularioActivity extends AppCompatActivity {
 
@@ -108,6 +109,10 @@ public class FormularioActivity extends AppCompatActivity {
                 }
 
                 dao.close();// ganhamos do SQLiteHelper
+
+                //thread separado da thred main e q não trave o app
+                //execute() faz o processo que a AsyncTask precisa para entrar na thread secundária e não travar a thread principal
+                new InsereAlunoTask(aluno).execute();
 
                 Toast.makeText(FormularioActivity.this,"Aluno "+aluno.getNome()+" salvo com sucesso!", Toast.LENGTH_SHORT).show();
 
