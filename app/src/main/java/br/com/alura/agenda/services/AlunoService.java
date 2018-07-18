@@ -12,5 +12,5 @@ public interface AlunoService {
     //JacksonConverterFactory converte o aluno
     //@Body pega o aluno transf em json e deixa no corpo da requisicao
     @POST("aluno")
-    Call insere(@Body Aluno aluno);
+    Call<Void> insere(@Body Aluno aluno);
 }

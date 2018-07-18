@@ -1,9 +1,15 @@
 package br.com.alura.agenda.modelo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 //serializa para passar o aluno da activity listaAluno para activity Formulario
 public class Aluno implements Serializable{
+
+    // @JsonProperty muda a propriedade na hora da serializacao(transf o obj em json)
+    //o id será serilizado no servidor como idCliente que é um campo no servidor
+    @JsonProperty("idCliente")
     private Long id;
     private String nome;
     private String endereco;

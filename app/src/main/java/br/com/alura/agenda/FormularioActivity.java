@@ -24,7 +24,6 @@ import java.io.File;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
 import br.com.alura.agenda.retrofit.RetrofitInicializador;
-import br.com.alura.agenda.tasks.InsereAlunoTask;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -115,12 +114,9 @@ public class FormularioActivity extends AppCompatActivity {
 
                 dao.close();// ganhamos do SQLiteHelper
 
-                //thread separado da thred main e q não trave o app
-                //execute() faz o processo que a AsyncTask precisa para entrar na thread secundária e não travar a thread principal
-               // new InsereAlunoTask(aluno).execute();
-
                 Call call = new RetrofitInicializador().getAlunoService().insere(aluno);
                 ////thread separado da thred main e q não trave o app
+                //enqueue requisicao de thread assincrona dif da thread principal
                 call.enqueue(new Callback() {
                     //metodos de retorno
                     //sucesso

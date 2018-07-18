@@ -39,8 +39,9 @@ public class AlunoDAO extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();// ref do banco de dados
         ContentValues dados = pegaDadosDoAluno(aluno);
 
-        db.insert("Alunos",null, dados);//monta a instrucao sql. protege os dados
-
+        long id = db.insert("Alunos",null, dados);//monta a instrucao sql. protege os dados
+        //pega o id antes de add no servidor
+        aluno.setId(id);
     }
 
     @NonNull
