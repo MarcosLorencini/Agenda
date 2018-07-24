@@ -9,8 +9,8 @@ public class Aluno implements Serializable{
 
     // @JsonProperty muda a propriedade na hora da serializacao(transf o obj em json)
     //o id será serilizado no servidor como idCliente que é um campo no servidor
-    @JsonProperty("idCliente")
-    private Long id;
+    //@JsonProperty("idCliente")
+    private String id;
     private String nome;
     private String endereco;
     private String telefone;
@@ -18,11 +18,11 @@ public class Aluno implements Serializable{
     private Double nota;
     private String caminhoFoto;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

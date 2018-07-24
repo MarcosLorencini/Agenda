@@ -2,30 +2,29 @@ package br.com.alura.agenda;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.LabeledIntent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.provider.Browser;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import br.com.alura.agenda.adapter.AlunosAdapter;
-import br.com.alura.agenda.converter.AlunoConverter;
 import br.com.alura.agenda.dao.AlunoDAO;
 import br.com.alura.agenda.modelo.Aluno;
+import br.com.alura.agenda.retrofit.RetrofitInicializador;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListaAlunosActivity extends AppCompatActivity {
 
@@ -85,6 +84,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
     private void carregaLista() {
         AlunoDAO dao = new AlunoDAO(this);//contexto activite
         List<Aluno> alunos = dao.buscaAlunos();
+
+        for (Aluno aluno : alunos) {
+            Log.i("id do aluno: ", String.valueOf(aluno.getId()));
+        }
         dao.close();// ganhamos do SQLiteHelper
             //passsa o contexto
             //passa a lista de alunos para o adapter
@@ -96,6 +99,26 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //carregar a lista do servidor
+        Call<List<Aluno>> call = new RetrofitInicializador().getAlunoService().lista();
+        call.enqueue(new Callback<List<Aluno>>() {
+            @Override
+            public void onResponse(Call<List<Aluno>> call, Response<List<Aluno>> response) {
+                //instancia o banco sqlite e preenchelo
+                //body() generics que o banco o servidor devolve
+                List<Aluno> alunos = response.body();
+                AlunoDAO dao = new AlunoDAO(ListaAlunosActivity.this);
+                dao.sincroniza(alunos);
+                dao.close();
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Aluno>> call, Throwable t) {
+                Log.e("onFailure chamado",t.getMessage());
+            }
+        });
+
         carregaLista();
     }
 

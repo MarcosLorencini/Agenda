@@ -30,7 +30,7 @@ public class RetrofitInicializador  {
         //baseUrl url base
         //addConverterFactory add a fabrica de conversor
         //tem que add o com.squareup.retrofit2:converter-jackson na dependencias para usar JacksonConverterFactory.create()
-        retrofit = new Retrofit.Builder().baseUrl("http://192.168.1.2:8080/api/")
+        retrofit = new Retrofit.Builder().baseUrl("http://192.168.137.1:8080/api/")
                 .addConverterFactory(JacksonConverterFactory.create())
                 .client(client.build())//recebe o client e o retrofit constroe o client e recebe este client do interceptor
                 .build();

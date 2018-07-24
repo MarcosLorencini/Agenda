@@ -46,7 +46,7 @@ public class AlunosAdapter extends BaseAdapter {
     //devolve o item por Id(pode ser o id que salvou no banco, rg, cpf...)
     @Override
     public long getItemId(int position) {
-        return alunos.get(position).getId();
+        return 0;
     }
 
     //envocado pela lista quando precisa mostrar algo
