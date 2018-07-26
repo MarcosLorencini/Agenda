@@ -1,10 +1,14 @@
 package br.com.alura.agenda.modelo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
 //serializa para passar o aluno da activity listaAluno para activity Formulario
+//@JsonIgnoreProperties(ignoreUnknown = true) no memento da des e serializacao caso não haja um propriedade nesta classe que exista no servidor e ignora esta propriedade
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Aluno implements Serializable{
 
     // @JsonProperty muda a propriedade na hora da serializacao(transf o obj em json)
